@@ -19,13 +19,13 @@ before_script:
   - npm --version
   - node_modules/.bin/newman --version  
 script:
-  - sudo nosetests
-  - sudo docker build -t my_docker_reposetory/swagger_server:1.0.0 .
-  - sudo docker run --name example_api -d -t -p 127.0.0.1:8080:8080 my/swagger-spring-example:1.0.0
-  - sudo docker ps
-  - sudo count=0 && until $(curl --output /dev/null --silent --head --fail http://localhost:8080); do printf '.' && sleep 3 && count=$((count+1)) && if [ $count -gt 5 ]; then break; fi; done
+  - nosetests
+  - docker build -t my_docker_reposetory/swagger_server:1.0.0 .
+  - docker run --name example_api -d -t -p 127.0.0.1:8080:8080 my/swagger-spring-example:1.0.0
+  - docker ps
+  - count=0 && until $(curl --output /dev/null --silent --head --fail http://localhost:8080); do printf '.' && sleep 3 && count=$((count+1)) && if [ $count -gt 5 ]; then break; fi; done
 
 after_success:
-  - sudo docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - sudo docker tag my_docker_reposetory/swagger-spring-example:1.0.0 my_docker_reposetory/swagger-spring-example:1.0.0
-  - sudo docker push my_docker_reposetory/swagger-spring-example:1.0.0
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker tag my_docker_reposetory/swagger-spring-example:1.0.0 my_docker_reposetory/swagger-spring-example:1.0.0
+  - docker push my_docker_reposetory/swagger-spring-example:1.0.0
