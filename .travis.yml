@@ -5,7 +5,7 @@ services:
 # ref: https://docs.travis-ci.com/user/languages/python
 language: python
 python:
-  - "3.2"
+  - "3.3"
   - "3.5"
 before_install:
   - docker version
@@ -13,7 +13,7 @@ before_install:
 install:
   - npm install newman
   - npm i -g npm to update
-  - "pip install -r requirements.txt --allow-external"
+  - "pip install -r requirements.txt"
 before_script:
   - node --version
   - npm --version
