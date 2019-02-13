@@ -1,30 +1,33 @@
 sudo: required
 services:
-  - docker
-# ref: https://docs.travis-ci.com/user/languages/python
+- docker
 language: python
 python:
-  - "3.4"
-  - "3.5"
+- '3.4'
+- '3.5'
 before_install:
-  - docker version
-  - docker info
+- docker version
+- docker info
 install:
-  - npm install newman
-  - "pip install -r requirements.txt"
+- npm install newman
+- pip install -r requirements.txt
 before_script:
-  - node --version
-  - npm --version
-  - node_modules/.bin/newman --version  
+- node --version
+- npm --version
+- node_modules/.bin/newman --version
 script:
-  - nosetests
-  - docker build -t my_docker_reposetory/swagger_server:1.0.0 .
-  - docker run --name example_api -d -t -p 127.0.0.1:8080:8080 my/swagger-spring-example:1.0.0
-  - docker ps
-  - count=0 && until $(curl --output /dev/null --silent --head --fail http://localhost:8080); do printf '.' && sleep 3 && count=$((count+1)) && if [ $count -gt 5 ]; then break; fi; done
-
+- nosetests
+- docker build -t my_docker_reposetory/swagger_server:1.0.0 .
+- docker run --name example_api -d -t -p 127.0.0.1:8080:8080 my/swagger-spring-example:1.0.0
+- docker ps
+- count=0 && until $(curl --output /dev/null --silent --head --fail http://localhost:8080);
+  do printf '.' && sleep 3 && count=$((count+1)) && if [ $count -gt 5 ]; then break;
+  fi; done
 after_success:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker tag my_docker_reposetory/swagger-spring-example:1.0.0 my_docker_reposetory/swagger-spring-example:1.0.0
-  - docker push my_docker_reposetory/swagger-spring-example:1.0.0
-
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker tag my_docker_reposetory/swagger-spring-example:1.0.0 my_docker_reposetory/swagger-spring-example:1.0.0
+- docker push my_docker_reposetory/swagger-spring-example:1.0.0
+env:
+  global:
+  - secure: jvMa17wfQuHKy1YFOniHKujJSZSeQg7j0+TEHyK12h4mqjQgOvb+kMWAS5nESXG32izq2ioi7hyAIH56hJfklmseLjFbt/XqsaQ2kULQWvQ4xL+yLNKBorr/0z3Nk1iqY0y6y+D2ho0x52s/7B/b5oYql85C+mZpoAzhmtwbOYIJiDU0YuCrhKVu6N20lZFVm/FhW0mXTQeXNCHdvs7Acw/yBS96hu9BvkVKWkQNPa2TVexcWfA2dplGS8Bz4EmEKCQZxI4EBc8ej9ODdkllJJt4K7iHzK6xvrVBGv2HxZXS0ViJxbyPMNUjZpAats/TVFwr1e77LOysxh2LLknrIE/XDGkG93Mg4LP0xzCFEJhkR9zy2105i78bx/O0H3Jr/Q43Oyo6XJUCbVIZEOBl5xpBz7w1s8GZzEXf2des5f21zbJ4fHMFDV5ejNB/yZmSYWxlpWA/IhRJEdMTT4PapN5imqOvC0qssyqU3ceY1K9HYIj791V3/nUC3b1Hz1uunMas17vCAZhMf6TKep7V4xhIC/5dTuRw748C+uZkPtaFgq1Bk81+LhAzIMIHyA6bI540scyg/fNTlwihdpSTGhLinTWDvi4/BRqQiH1ZSEbCqcvpDC3WH2lHnFz1AxrYAdQzm5n9lg9AGGYqTD0kUtbzIaNsCVNE4ar33y7AC08=
+  - secure: X5Qn59vQ61MoptPKfBTSO1ef0iYa5k+jZf/tdmnZy05tUgxgFp9fDfKInljh1ey1RDTPDRKm3DNZiFBTp9jbRq9T1WAkNf4r2gRaUiRrOO3BeIa4irRo6lUhYq7IOd0lMNg4pDWONsYNYd8OJ9Gmym6DNyhcKoWODLxG4IP9Fr0kdvnHr9Mh0CHrybJYPjHTTfKlebhywDoln19AbMwGcWoo+VIb2u7ZlsA3aES2nMGmOjTnzQbHWkUWnF/4xzNPY3kY59NyvOUObUMAgyyKZCHtcxaMfO3F8XRlKrfcP/YVV7ivKWf8D37M7CqB1GeimPYz0PjRSII0rrJw04f4a2X4b3LRr5iit1FoKMYApSKWJeRD8+kRisDD9kWZg0ooiYzY5F2sQBDMZV1xObYyxGMDDwnOTZ3o/+4uB1wMoOLDf7/50ADvJyVe5spJbhl4jQJIhdOsOlgY0JNZpogZciLYN21poK0PdxHiTEya5vv+uab++LR+OsO76F7eUANxww0K+qiK62lT7X2K8T2KOaRTR9WRHE6it70LDZ7n0J+xTpMBU1HHt7qJYt5ZGngq5yyuDtObmoTIuK2CH4G9FlIWLoEQEG31xLA5jR+KnBHyo9vUqJVeqg7aHCybnz7FA6xDYLU9Yd/0fsQ/sa02qWRwOES+6mZVkwKdulSXFV0=
