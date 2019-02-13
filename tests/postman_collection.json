@@ -19,8 +19,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{base_url}}/persons?pageSize={{pageSize}}&pageNumber={{pageNumber}}",
-							"protocol": "https",
+							"raw": "{{base_url}}/persons?pageSize={{pageSize}}&pageNumber={{pageNumber}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -52,8 +51,7 @@
 							"raw": "The person to create."
 						},
 						"url": {
-							"raw": "https://{{base_url}}/persons",
-							"protocol": "https",
+							"raw": "{{base_url}}/persons",
 							"host": [
 								"{{base_url}}"
 							],
@@ -75,8 +73,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{base_url}}/persons/:username",
-							"protocol": "https",
+							"raw": "{{base_url}}/persons/:username",
 							"host": [
 								"{{base_url}}"
 							],
@@ -102,8 +99,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "https://{{base_url}}/persons/:username",
-							"protocol": "https",
+							"raw": "{{base_url}}/persons/:username",
 							"host": [
 								"{{base_url}}"
 							],
