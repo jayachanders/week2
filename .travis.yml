@@ -11,22 +11,24 @@ before_install:
 install:
 - npm install newman
 - pip install -r requirements.txt
+- pip install nose
+- pip install flask_testing
 before_script:
 - node --version
 - npm --version
 - node_modules/.bin/newman --version
 script:
-- nosetests
-- docker build -t my_docker_reposetory/swagger_server:1.0.0 .
-- docker run --name example_api -d -t -p 127.0.0.1:8080:8080 my/swagger-spring-example:1.0.0
+- nosetests --with-coverage
+- docker build -t jayachander/swagger_server:1.0.0 .
+- docker run --name example_api -d -t -p 127.0.0.1:8080:8080 jayachander/swagger_server:1.0.0
 - docker ps
 - count=0 && until $(curl --output /dev/null --silent --head --fail http://localhost:8080);
   do printf '.' && sleep 3 && count=$((count+1)) && if [ $count -gt 5 ]; then break;
   fi; done
 after_success:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
-- docker tag my_docker_reposetory/swagger-spring-example:1.0.0 my_docker_reposetory/swagger-spring-example:1.0.0
-- docker push my_docker_reposetory/swagger-spring-example:1.0.0
+- docker tag jayachander/swagger_server:1.0.0 jayachander/swagger_server:1.0.0
+- docker push jayachander/swagger_server:1.0.0
 env:
   global:
   - secure: jvMa17wfQuHKy1YFOniHKujJSZSeQg7j0+TEHyK12h4mqjQgOvb+kMWAS5nESXG32izq2ioi7hyAIH56hJfklmseLjFbt/XqsaQ2kULQWvQ4xL+yLNKBorr/0z3Nk1iqY0y6y+D2ho0x52s/7B/b5oYql85C+mZpoAzhmtwbOYIJiDU0YuCrhKVu6N20lZFVm/FhW0mXTQeXNCHdvs7Acw/yBS96hu9BvkVKWkQNPa2TVexcWfA2dplGS8Bz4EmEKCQZxI4EBc8ej9ODdkllJJt4K7iHzK6xvrVBGv2HxZXS0ViJxbyPMNUjZpAats/TVFwr1e77LOysxh2LLknrIE/XDGkG93Mg4LP0xzCFEJhkR9zy2105i78bx/O0H3Jr/Q43Oyo6XJUCbVIZEOBl5xpBz7w1s8GZzEXf2des5f21zbJ4fHMFDV5ejNB/yZmSYWxlpWA/IhRJEdMTT4PapN5imqOvC0qssyqU3ceY1K9HYIj791V3/nUC3b1Hz1uunMas17vCAZhMf6TKep7V4xhIC/5dTuRw748C+uZkPtaFgq1Bk81+LhAzIMIHyA6bI540scyg/fNTlwihdpSTGhLinTWDvi4/BRqQiH1ZSEbCqcvpDC3WH2lHnFz1AxrYAdQzm5n9lg9AGGYqTD0kUtbzIaNsCVNE4ar33y7AC08=
