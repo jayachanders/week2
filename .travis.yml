@@ -18,7 +18,7 @@ before_script:
 - npm --version
 - node_modules/.bin/newman --version
 script:
-- nosetests --with-coverage
+- nosetests 
 - docker build -t jayachander/swagger_server:1.0.0 .
 - docker run --name example_api -d -t -p 127.0.0.1:8080:8080 jayachander/swagger_server:1.0.0
 - docker ps
